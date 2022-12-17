@@ -1,0 +1,46 @@
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Repository name: django-avatar
+*  Author: Grant Mcconnaughey
+*  Date: November 6, 2022
+*  URL: https://github.com/jazzband/django-avatar/blob/main/avatar/templates/avatar/change.html
+*
+*  Description: Utilized to provide an override template for the Django Avatar.
+*  Specifically allowed me to modify the modify/change avatar page in HTML
+*
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+*
+***************************************************************************************/"""
+//-->
+
+{% extends "account/base.html" %}
+{% load i18n avatar_tags%}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block content %}
+    <h1 class="text-center p-3">Avatar Customization</h1>
+    <h3 class="text-center p-2">Your current avatar:</h3>
+    <center><img>{% avatar user 150%}</img></center>
+    <h1 class="p-2"></h1>
+    {% if not avatars %}
+        <p class="text-center p-2">{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+    {% endif %}
+    <p class="alert alert-primary text-center d-grid col-4 mx-auto p-2">Choose a new avatar:</p>
+    <form class="text-center" enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+        <p>
+          <div class="d-grid col-3 mx-auto">
+            <label for="id_avatar"></label>
+            <input class="form-control" type="file" name="avatar" accept="image/*" required="" id="id_avatar">
+          </div>
+        </p>
+        <p>{% csrf_token %}<input class="btn btn-outline-primary" type="submit" value="{% trans 'Upload New Image' %}"  /></p>
+    </form>
+{% endblock %}

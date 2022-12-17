@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+***************************************************************************************/"""
+//-->
+<head>
+    <title>Google Registration</title>
+</head>
+
+<style>
+div {
+  margin: 25px 50px 75px;
+  background-color: steelblue;
+}
+</style>
+
+{% block content %}
+<body>
+    {% if user.is_authenticated %}
+    <meta http-equiv="Refresh" content="0; url= 'user'" />
+
+    {% else %}
+    <h1 class="p-4"></h1>
+    <!--
+    """/***************************************************************************************
+    *  REFERENCES
+    *  Title: Business Team working on business plan Illustration
+    *  Author: Rini Astiyah
+    *  Date: November 18, 2022
+    *  URL: https://cdni.iconscout.com/illustration/premium/thumb/business-team-working-on-business-plan-4352584-3618766.png
+    *
+    *  Description: Utilized to create the chat room html
+    *
+    ***************************************************************************************/"""
+    //-->
+    <img align="left" style="margin-left:300px; display:inline-block;" class="img-fluid" src="https://cdni.iconscout.com/illustration/premium/thumb/business-team-working-on-business-plan-4352584-3618766.png">
+    <div class="d-grid col-3 mx-5 justify-content-start" style="display:inline-block;">
+        <h1 class="pt-4"></h1>
+        <h1 class="pt-3"></h1>
+        <h1 class="pt-5 pb-4">Finding a new study buddy made easy!</h1>
+        <h6 class="pb-2">At Study Buddy we strive to connect students around the globe to gauge performance and create lasting connections inside and outside the classroom.</h6>
+        <h1 class="p-1"></h1>
+        <a class="btn btn-outline-primary" href="{% url 'account_login' %}">Start Now!</a>
+    </div>
+
+    {% endif %}
+</body>
+
+</html>
+
+{% endblock %}

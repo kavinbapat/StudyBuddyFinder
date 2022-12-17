@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Repository name: django-allauth
+*  Author: Raymond Penners
+*  Date: October 22, 2022
+*  URL: https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/base.html
+*
+*  Description: Utilized to provide an override template for the Google Login.
+*  Specifically allowed me to modify the preset the upper menu HTML
+*
+*
+*  Repository name: django-bootstrap-datepicker-plus
+*  Author: monim67
+*  Date: November 27, 2022
+*  URL: https://github.com/monim67/django-bootstrap-datepicker-plus
+*
+*  Description: Utilized to create date time picker for selecting study session time
+*
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+*
+***************************************************************************************/"""
+//-->
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{{ studysessionform.media.css }}
+
+{% bootstrap_javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.slim.min.js"></script>
+{{ studysessionform.media.js }}
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+    <nav class="navbar navbar-light bg-light">
+    <div style="margin-left : 10px;">
+      {%comment%}<strong>Menu:</strong>{% endcomment %}
+        {% if user.is_authenticated %}
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Menu
+          </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="{% url 'user' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'dep' %}">Add Course</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_email' %}">Change E-mail</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+            </ul>
+          </div>
+        </div>
+        {% else %}
+        <div class="dropdown">
+          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            Menu
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="{% url 'studybuddy' %}">Home</a></li>
+            <li><a class="dropdown-item" href="{% url 'account_login' %}">Sign In</a></li>
+            <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
+          </ul>
+        </div>
+        {% endif %}
+      
+    </nav>
+    
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,14 @@
+Django~=4.1.2
+gunicorn
+django-heroku
+django-bootstrap-v5
+django-allauth
+importlib-metadata
+django-avatar
+twilio~=6.10.1
+Faker~=15.3.1
+python-dotenv~=0.21.0
+requests~=2.28.1
+django-bootstrap-datepicker-plus
+django-static-jquery3
+django-jquery

@@ -1,0 +1,45 @@
+{% extends "socialaccount/base.html" %}
+
+{% load i18n %}
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Repository name: django-allauth
+*  Author: Raymond Penners
+*  Date: October 22, 2022
+*  URL: https://github.com/pennersr/django-allauth/blob/master/allauth/templates/socialaccount/signup.html
+*
+*  Description: Utilized to provide an override template for the Google Login.
+*  Specifically allowed me to modify the preset Google signup HTML
+*
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+*
+***************************************************************************************/"""
+//-->
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <h1 class="text-center pt-2 pb-3">{% trans "Sign Up" %}</h1>
+
+<div class="alert alert-warning text-center d-grid col-8 mx-auto p-0 pt-3">
+  <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+  {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
+</div>
+<form class="signup d-grid col-6 mx-auto text-center" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-outline-success d-grid col-4 mx-auto p-2" type="submit">{% trans "Sign Up" %} &raquo;</button>
+</form>
+
+{% endblock %}

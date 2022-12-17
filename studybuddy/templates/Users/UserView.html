@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*
+*  Website name: django-avatar
+*  Date: December 6, 2022
+*  URL: https://django-avatar.readthedocs.io/en/latest/
+*  Description: Utilized to create cleaner HTML for the website
+*
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*  Description: Utilized to create cleaner HTML for the website
+*
+***************************************************************************************/"""
+//-->
+{% extends "account/base.html" %}
+{% load socialaccount %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load avatar_tags %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups List</title>
+</head>
+
+
+<body>
+    {% if user.is_authenticated %}
+    <h3 class="text-center p-2">Welcome {{ user }}:</h3>
+    <div class="justify-content-center text-center pt-1 pb-4">
+        <a>{% avatar user 150 %}</a>
+        <br>
+        <a href="{% url 'avatar_change' %}">Change avatar</a>
+    </div>
+    {% endif %}
+
+    <h1 class="p-2"></h1>
+    {% if user_courses %}
+    <p>
+        <button class="btn btn-primary d-grid col-5 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#courses" aria-expanded="true" aria-controls="collapseExample" disabled>Added Courses</button>
+    </p>
+    <div class="collapse show" id="courses">
+        {% for course in user_courses %}
+        <div class="card card-body d-grid col-5 mx-auto text-center">
+            <a href="{%url 'course' course.course_IDI course.course_sub%}">{{course.course_sub}} (#{{course.course_IDI}})</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="login alert alert-warning d-grid col-3 mx-auto text-center pb-1">
+        <p>You have not joined any courses. <a href="{% url 'dep' %}">Click here</a> to join one!</p>
+    </div>
+    {% endif %}
+
+    {% if user_groups %}
+    <h1 class="p-2"></h1>
+    <p>
+        <button class="btn btn-primary d-grid col-5 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#groups" aria-expanded="true" aria-controls="collapseExample" disabled>Added Groups</button>
+    </p>
+    <div class="collapse show" id="groups">
+        {% for group in user_groups %}
+        <div class="card card-body d-grid col-5 mx-auto text-center">
+            <a href="{%url 'view_group' group.id%}">{{group}}</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if friends %}
+    <h1 class="p-2"></h1>
+    <p>
+        <button class="btn btn-primary d-grid col-5 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#groups" aria-expanded="true" aria-controls="collapseExample">Friends List</button>
+    </p>
+    <div class="collapse show" id="groups">
+        {% for friend in friends %}
+        <div class="card card-body d-grid col-5 mx-auto text-center">
+            {{friend}}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+{% endblock %}
+</html>

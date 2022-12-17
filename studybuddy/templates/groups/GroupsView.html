@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+***************************************************************************************/"""
+//-->
+{% extends "account/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<html lang="en">
+<meta charset="UTF-8">
+<head>
+    <title>Groups List</title>
+</head>
+<body>
+    {% block content %}
+    <h1 class="text-center p-3">Group information:</h1>
+    {% if members_list %}
+    <p>
+        <button class="btn btn-primary d-grid col-4 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#members" aria-expanded="true" aria-controls="collapseExample" disabled>Group Members</button>
+    </p>
+    <div class="collapse show" id="members">
+        {% for member in members_list %}
+        <div class="card card-body d-grid col-4 mx-auto text-center">
+            <a href="{% url 'add_friend' member.username %}">{{ member.username }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="login alert alert-warning d-grid col-4 mx-auto text-center pb-1">
+        <p>This Group Has No Members</p>
+    </div>
+    {% endif %}
+
+    <h1 class="p-2"></h1>
+
+    {% if study_sessions %}
+    <p>
+        <button class="btn btn-primary d-grid col-4 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#sessions" aria-expanded="true" aria-controls="collapseExample" disabled>Upcoming Study Sessions</button>
+    </p>
+    <div class="collapse show" id="sessions">
+        {% for session in study_sessions %}
+        <div class="card card-body d-grid col-4 mx-auto text-center">
+            <a>{{ session.sessions }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    <h1 class="p-2"></h1>
+    {% endif %}
+
+    <p>
+        <button onclick="hide()" class="btn btn-secondary d-grid col-4 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#options" aria-expanded="false" aria-controls="collapseExample">Options</button>
+    </p>
+    <div class="collapse" id="options">
+        <div class="d-flex justify-content-center col-6 mx-auto">
+            {% for member in members_list %}
+                {% if member.email == user.email %}
+                    <a class="btn btn-outline-success" id="chatroom" href="{% url 'create_room' group_id %}">Join Chat Room</a>
+                    <h1 class="p-1"></h1>
+                    <a class="btn btn-outline-success" id="session" href="{% url 'studysession' group_id %}">Create Study Session</a>
+                {% endif %}
+            {% endfor %}
+            <a class="btn btn-outline-success" id="join" href="{% url 'join_group' group_id%}">Join Group</a>
+        </div>
+    </div>
+
+    <script>
+        function hide() {
+            var x = document.getElementById('chatroom');
+            var y = document.getElementById('join');
+            if (document.body.contains(x)){
+                x.style.display = "block";
+                y.style.display = "none";
+            }
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*
+*  Repository name: django-bootstrap-datepicker-plus
+*  Author: monim67
+*  Date: November 27, 2022
+*  URL: https://github.com/monim67/django-bootstrap-datepicker-plus
+*  Description: Utilized to create date time picker for selecting study session time
+*
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*  Description: Utilized to create cleaner HTML for the website
+*
+***************************************************************************************/"""
+//-->
+{% extends "account/base.html" %}
+{% load bootstrap5 %}
+<head>
+</head>
+<body>
+    {% block content %}
+    <h1 class="text-center p-2">Create a new study session:</h1>
+    <br>
+    <div class="alert alert-warning col-7 mx-auto p-3">
+        <h6 class="text-center">Selecting a time and date will allow you to create a study session for your current group!</h6>
+    </div>
+    <form action="" method = "post">
+        {% csrf_token %}
+        <div class="col-6 mx-auto pb-4">
+            {% bootstrap_form studysessionform %}
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>

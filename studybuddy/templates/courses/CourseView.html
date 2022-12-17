@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+***************************************************************************************/"""
+//-->
+{% extends "account/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<html lang="en">
+<meta charset="UTF-8">
+<head>
+    <title>Groups List</title>
+</head>
+<body onload="hide()">
+    {% block content %}
+
+    <h1 class="text-center p-3">{{ courseJSON.description }}</h1>
+    <h6 class="text-center">Course ID Number: {{courseID}}</h6>
+    <h6 class="text-center pb-4"> Instructor:
+    {% for course, value in courseJSON.items %}
+        {% for course2, value2 in value.items %}
+            {{ value2 }}
+            {% if course2 == 'name' %}
+            (
+            {% else %}
+            )
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </h6>
+
+    <p>
+        <button class="btn btn-secondary d-grid col-4 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#course" aria-expanded="false" aria-controls="collapseExample">Options</button>
+    </p>
+    <div class="collapse" id="course">
+        <div class="btn-group d-flex justify-content-center col-4 mx-auto">
+            <a class="btn btn-outline-success d-grid col-3 mx-auto p-2" href="{% url 'add_group' courseID %}">Add a new group</a>
+            <a class="btn btn-outline-success d-grid col-3 mx-auto p-2" href="{% url 'add_course' courseID%}">Add Course</a>
+        </div>
+    </div>
+
+    <h1 class="p-1"></h1>
+
+    {% if course_groups %}
+    <p>
+        <button class="btn btn-primary d-grid col-4 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#groups" aria-expanded="true" aria-controls="collapseExample" disabled>Active Groups</button>
+    </p>
+    <div class="collapse show" id="groups">
+        {% for group in course_groups %}
+        <div class="card card-body d-grid col-4 mx-auto text-center">
+            <a href="{%url 'view_group' group.id%}">{{group}}</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="login alert alert-warning d-grid col-4 mx-auto text-center pb-1">
+        <p>This course has no active groups. <a href="{% url 'add_group' courseID %}">Click here</a> to add one</p>
+    </div>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

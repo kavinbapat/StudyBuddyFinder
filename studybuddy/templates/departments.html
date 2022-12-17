@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+"""/***************************************************************************************
+*  REFERENCES
+*  Website name: Bootstrap
+*  Date: December 6, 2022
+*  URL: https://getbootstrap.com/docs/5.0/getting-started/introduction/
+*
+*  Description: Utilized to create cleaner HTML for the website
+***************************************************************************************/"""
+//-->
+{% extends "account/base.html" %}
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+{% block content %}
+<body>
+    <h1 class="text-center p-2">Find a class:</h1>
+    <p>
+        <button class="btn btn-primary d-grid col-5 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target="#classes" aria-expanded="false" aria-controls="collapseExample">Courses</button>
+    </p>
+    <div class="collapse" id="classes">
+        <div class="card card-body d-grid col-5 mx-auto">
+            {% for key, l in response2.items %}
+            <p>
+                <button class="btn btn-secondary d-grid col-5 mx-auto p-2" type="button" data-bs-toggle="collapse" data-bs-target=#{{key}} aria-expanded="false" aria-controls="collapseExample">{{ key }}</button>
+            </p>
+            <div class="collapse" id={{key}}>
+                <div class="card card-body">
+                    <ul class="list-group text-center">
+                        {% for i in l %}
+                        <li class="list-group-item"> <a href="{%url 'course' i.course_number i.subject%}">{{i.description}}</a> </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}
+</html>
